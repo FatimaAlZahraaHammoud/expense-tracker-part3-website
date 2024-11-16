@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import Transactions from "./pages/Transactions";
 import Navbar from "./components/Navbar";
 import Budget_Container from './components/Budget-container';
+import Expenses_categories_container from './components/expenses-categories-container';
 import './styles/style.css';
 import "./styles/base/utilities.css";
 import "./styles/base/colors.css";
@@ -15,6 +16,10 @@ function App() {
     <div className='App'>
       {location.pathname !== "/" && <Navbar />}
       {location.pathname !== "/" && <Budget_Container />}
+
+      <div class="transactions-categories-and-form">
+        {location.pathname !== "/" && <Budget_Container />}
+      </div>
 
       <Routes>
         <Route path='/' element={<Login />}/>
