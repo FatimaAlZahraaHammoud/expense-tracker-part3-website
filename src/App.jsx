@@ -1,19 +1,26 @@
 import './App.css';
 import Login from './pages/Login';
 import Transactions from "./pages/Transactions";
+import Navbar from "./components/Navbar";
+import Budget_Container from './components/Budget-container';
+import Expenses_categories_container from './components/Expenses-categories-container';
 import './styles/style.css';
 import "./styles/base/utilities.css";
 import "./styles/base/colors.css";
-import { BrowserRouter, Routes, Route} from 'react-router-dom';
+import {Routes, Route, useLocation} from 'react-router-dom';
 
 function App() {
+  const location = useLocation();
+
   return (
-    <BrowserRouter>
+    <div className='App'>
+      {location.pathname !== "/" && <Navbar />}
+
       <Routes>
         <Route path='/' element={<Login />}/>
         <Route path='/transactions' element={<transactions />} />
       </Routes>
-    </BrowserRouter>
+    </div>
   );
 }
 
