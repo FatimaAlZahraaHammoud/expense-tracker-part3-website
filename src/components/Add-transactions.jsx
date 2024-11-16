@@ -29,7 +29,8 @@ const Add_transactions = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle form submission logic here (e.g., sending data to the server)
+        // add it to the database
+        // add it to the table
         console.log(formData);
     };
 
