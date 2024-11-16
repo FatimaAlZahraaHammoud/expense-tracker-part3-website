@@ -50,7 +50,7 @@ const Login = () =>{
                         data.append("email", loginForm.email);
                         data.append("password", loginForm.password);
                         axios.post("http://localhost/FSW-SE-Factory/APIs/login.php", data).then((res)=>{
-                            localStorage.setItem("userId", res.data.user.id);
+                            localStorage.setItem("userId", res.data.UserId);
                             navigate("/transactions");
                         }).catch((error) =>{
                             setError(error.response.data.status);

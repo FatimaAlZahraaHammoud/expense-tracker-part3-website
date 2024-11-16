@@ -37,7 +37,7 @@ const FilterTransactions = () => {
                 <div className="price">
                     <div className="filter-group">
                         <label htmlFor="min-price">Min Price:</label>
-                        <inpuyt type="number" id="min-price" name="minPrice" value={filters.minPrice} placeholder="0"
+                        <input type="number" id="min-price" name="minPrice" value={filters.minPrice} placeholder="0"
                             onChange={handleChange}
                         />
                     </div>

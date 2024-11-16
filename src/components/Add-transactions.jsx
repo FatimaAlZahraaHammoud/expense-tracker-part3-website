@@ -9,6 +9,7 @@ import axios from "axios";
 
 const Add_transactions = () => {
 
+    const [errorMessage, setErrorMessage] = useState('');
     const [formData, setFormData] = useState({
         category: '',
         amount: '',
@@ -27,9 +28,49 @@ const Add_transactions = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
-        // add it to the database
+        if (!formData.category || !formData.amount || !formData.type_of_transaction || !formData.date || !formData.notes){
+            setErrorMessage("Please fill all the form fields.");
+        }
+
+        const data = {
+            UserId: localStorage.getItem("userId"), 
+            category: formData.category,
+            amount: parseFloat(formData.amount),
+            type: formData.type_of_transaction,
+            date: formData.date,
+            notes: formData.notes
+        };
+
+        try{
+            const response = await axios.post("http://localhost/FSW-SE-Factory/APIs/addTransaction.php", data, {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if (response.data.status === "Transaction Successful") {
+                // Reset the form
+                setFormData({
+                    category: '',
+                    amount: '',
+                    type_of_transaction: '',
+                    date: '',
+                    notes: ''
+                });
+
+                console.log("Transaction added successfully:", response.data.transaction);
+            }
+            else {
+                setErrorMessage("Failed to add transaction.");
+            }
+        }
+        catch (error){
+            console.error("Error while adding transaction:", error);
+            setErrorMessage("An error occurred. Please try again later.");
+        }
+
         // add it to the table
         console.log(formData);
     };
@@ -99,6 +140,7 @@ const Add_transactions = () => {
                         <button id="submitTransaction" className="bg-green submitTransaction" type="submit">Add</button>
                     </div>
                 </form>
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
             </div>
         </div>
     );

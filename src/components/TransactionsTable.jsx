@@ -17,12 +17,14 @@ const TransactionsTable = () =>{
             <div className="transactions-table">
                 <table>
                     <thead>
-                        <th>Date</th>
-                        <th>Category</th>
-                        <th>Type</th>
-                        <th>Amount</th>
-                        <th>Notes</th>
-                        <th>Delete</th>
+                        <tr>
+                            <th>Date</th>
+                            <th>Category</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Notes</th>
+                            <th>Delete</th>
+                        </tr>
                     </thead>
 
                     <tbody className="table-body" id="table-body">

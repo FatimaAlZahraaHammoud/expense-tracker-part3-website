@@ -19,22 +19,9 @@ function App() {
   return (
     <div className='App'>
       {location.pathname !== "/" && <Navbar />}
-      {location.pathname !== "/" && <Budget_Container />}
-
-      <div className="transactions-categories-and-form">
-        {location.pathname !== "/" && <Expenses_categories_container />}
-        {location.pathname !== "/" && <Add_transactions />}
-      </div>
-
-      
-      <div class="table-and-filter">
-          {location.pathname !== "/" && <FilterTransactions />}
-          {location.pathname !== "/" && <TransactionsTable />}
-        </div>
-
       <Routes>
         <Route path='/' element={<Login />}/>
-        <Route path='/transactions' element={<transactions />} />
+        <Route path='/transactions' element={<Transactions />} />
       </Routes>
     </div>
   );
