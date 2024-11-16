@@ -61,20 +61,14 @@ const Add_transactions = ({addTransaction}) => {
                 });
 
                 addTransaction(response.data.transaction);
-
-                console.log("Transaction added successfully:", response.data.transaction);
             }
             else {
                 setErrorMessage("Failed to add transaction.");
             }
         }
         catch (error){
-            console.error("Error while adding transaction:", error);
             setErrorMessage("An error occurred. Please try again later.");
         }
-
-        // add it to the table
-        console.log(formData);
     };
 
     const formRef = useRef(null);

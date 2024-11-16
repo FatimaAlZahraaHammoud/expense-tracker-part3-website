@@ -23,12 +23,9 @@ const TransactionsTable = ({ transactions, setTransactions }) =>{
             if (response.data.status === "Load transaction successful") {
                 setTransactions(response.data.transactions);
             }
-            else{
-                console.log("error", response.data.message);
-            }
         })
         .catch((error) => {
-            console.error("Error fetching transactions:", error);
+
         });
     }
 
@@ -48,12 +45,8 @@ const TransactionsTable = ({ transactions, setTransactions }) =>{
                 setTransactions((prevTransactions) =>
                     prevTransactions.filter((transaction) => transaction.id !== transactionId)
                 );
-                console.log("Transaction deleted successfully:", transactionId);
-            } else {
-                console.error("Failed to delete transaction:", response.data.message);
             }
         } catch (error) {
-            console.error("Error deleting transaction:", error);
         }
     }
 
@@ -79,7 +72,6 @@ const TransactionsTable = ({ transactions, setTransactions }) =>{
             );
           }
         } catch (error) {
-          console.error('Error updating transaction', error);
         }
         handleCloseDialog();
     };
