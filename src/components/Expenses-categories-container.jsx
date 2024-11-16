@@ -92,7 +92,7 @@ const Expenses_categories_container = () => {
         {
             label: "+ Add new",
             colorClass: "",
-            icon: null, // No icon for "Add new"
+            icon: null,
         },
     ];
 

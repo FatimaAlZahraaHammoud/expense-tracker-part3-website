@@ -7,7 +7,7 @@ import "../styles/register-login.css";
 import { useNavigate} from "react-router-dom";
 import axios from "axios";
 
-const Card =  ({ amountId, amountClassName, label }) => {
+const Card =  ({ amountId, amountClassName, label, amount }) => {
     return (
         
         <div className="card">
@@ -28,7 +28,7 @@ const Card =  ({ amountId, amountClassName, label }) => {
                     <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
                 </svg>
                 <p className={amountClassName} id={amountId}>
-                    0
+                    ${amount.toFixed(2)}
                 </p>
             </div>
             <p className="type">{label}</p>
@@ -36,12 +36,12 @@ const Card =  ({ amountId, amountClassName, label }) => {
     );
 };
 
-const Budget_Container = () => {
+const Budget_Container = ({income, expense, budget}) => {
     return (
         <div className="budget-container">
-            <Card amountId="income-money" amountClassName="income-money" label="Total income"/>
-            <Card amountId="expense-money" amountClassName="expense-money" label="Total expense"/>
-            <Card amountId="budget-money" amountClassName="budget-money" label="Total budget"/>
+            <Card amountId="income-money" amountClassName="income-money" label="Total income" amount={income}/>
+            <Card amountId="expense-money" amountClassName="expense-money" label="Total expense" amount={expense}/>
+            <Card amountId="budget-money" amountClassName="budget-money" label="Total budget" amount={budget}/>
         </div>
     );
 };
