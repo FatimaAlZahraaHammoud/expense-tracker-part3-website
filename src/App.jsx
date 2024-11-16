@@ -3,7 +3,6 @@ import Login from './pages/Login';
 import Transactions from "./pages/Transactions";
 import Navbar from "./components/Navbar";
 import Budget_Container from './components/Budget-container';
-import Expenses_categories_container from './components/Expenses-categories-container';
 import './styles/style.css';
 import "./styles/base/utilities.css";
 import "./styles/base/colors.css";
@@ -15,6 +14,7 @@ function App() {
   return (
     <div className='App'>
       {location.pathname !== "/" && <Navbar />}
+      {location.pathname !== "/" && <Budget_Container />}
 
       <Routes>
         <Route path='/' element={<Login />}/>
