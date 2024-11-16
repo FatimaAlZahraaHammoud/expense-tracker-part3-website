@@ -6,6 +6,7 @@ import Budget_Container from './components/Budget-container';
 import Expenses_categories_container from './components/Expenses-categories-container';
 import FilterTransactions from './components/Filter-transactions';
 import Add_transactions from './components/Add-transactions';
+import TransactionsTable from './components/TransactionsTable';
 import './styles/base/base.css';
 import "./styles/base/utilities.css";
 import "./styles/base/colors.css";
@@ -28,6 +29,7 @@ function App() {
       
       <div class="table-and-filter">
           {location.pathname !== "/" && <FilterTransactions />}
+          {location.pathname !== "/" && <TransactionsTable />}
         </div>
 
       <Routes>
