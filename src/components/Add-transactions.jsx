@@ -7,7 +7,7 @@ import "../styles/register-login.css";
 import { useNavigate} from "react-router-dom";
 import axios from "axios";
 
-const Add_transactions = () => {
+const Add_transactions = ({addTransaction}) => {
 
     const [errorMessage, setErrorMessage] = useState('');
     const [formData, setFormData] = useState({
@@ -59,6 +59,8 @@ const Add_transactions = () => {
                     date: '',
                     notes: ''
                 });
+
+                addTransaction(response.data.transaction);
 
                 console.log("Transaction added successfully:", response.data.transaction);
             }

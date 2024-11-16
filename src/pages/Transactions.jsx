@@ -14,18 +14,22 @@ import axios from "axios";
 
 const Transactions = () => {
 
+  const [transactions, setTransactions] = useState([]);
+
+  const addTransactionToState = (newTransaction) => {
+    setTransactions((prevTransactions) => [...prevTransactions, newTransaction]);
+  };
+
   return (
     <div>
-      {/* Categories and Form Section */}
       <div className="transactions-categories-and-form">
         <Expenses_categories_container />
-        <Add_transactions />
+        <Add_transactions addTransaction = {addTransactionToState}/>
       </div>
 
-      {/* Table and Filter Section */}
       <div className="table-and-filter">
         <FilterTransactions />
-        <TransactionsTable />
+        <TransactionsTable transactions={transactions} setTransactions={setTransactions}/>
       </div>
     </div>
   );

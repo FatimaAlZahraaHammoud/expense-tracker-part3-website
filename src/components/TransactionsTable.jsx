@@ -1,17 +1,14 @@
 import React, {useState, useEffect} from "react";
-import "../styles/style.css";
+
 import "../styles/base/utilities.css";
 import "../styles/base/colors.css";
 import "../styles/base/base.css";
-import "../styles/register-login.css";
+import "../styles/style.css";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
-const TransactionsTable = () =>{
-
-    const [transactions, setTransactions] = useState([]);
+const TransactionsTable = ({ transactions, setTransactions }) =>{
     const userId = localStorage.getItem("userId");
-    console.log(userId);
 
     const loadTransactions = async () =>{
         const response = await axios.get(
@@ -37,6 +34,27 @@ const TransactionsTable = () =>{
         loadTransactions();
     }, []);
 
+    // delete transaction
+    const deleteTransaction = async(transactionId) => {
+        try{
+            const response = await axios.get(`http://localhost/FSW-SE-Factory/APIs/deleteTransaction.php?TransactionId=${transactionId}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            if (response.data.status === "Delete Success") {
+                setTransactions((prevTransactions) =>
+                    prevTransactions.filter((transaction) => transaction.id !== transactionId)
+                );
+                console.log("Transaction deleted successfully:", transactionId);
+            } else {
+                console.error("Failed to delete transaction:", response.data.message);
+            }
+        } catch (error) {
+            console.error("Error deleting transaction:", error);
+        }
+    }
+
     return(
         <div className="transactions-container" id="transactions-container">
             <div className="top-div">
@@ -57,6 +75,16 @@ const TransactionsTable = () =>{
                     </thead>
 
                     <tbody className="table-body" id="table-body">
+                        {transactions.map((transaction) => (
+                            <tr key={transaction.id}>
+                                <td>{transaction.date}</td>
+                                <td>{transaction.category}</td>
+                                <td>{transaction.type}</td>
+                                <td>{transaction.amount}</td>
+                                <td>{transaction.notes}</td>
+                                <td><button className="bg-red-light delete-transaction" onClick={()=> deleteTransaction(transaction.id)}>Delete</button></td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
