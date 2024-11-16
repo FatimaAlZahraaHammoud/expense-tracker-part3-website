@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-
+import TransactionDialog from "../components/TransactionDialog";
 import "../styles/base/utilities.css";
 import "../styles/base/colors.css";
 import "../styles/base/base.css";
@@ -8,6 +8,8 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
 const TransactionsTable = ({ transactions, setTransactions }) =>{
+    const [selectedTransaction, setSelectedTransaction] = useState(null);
+
     const userId = localStorage.getItem("userId");
 
     const loadTransactions = async () =>{
@@ -55,6 +57,34 @@ const TransactionsTable = ({ transactions, setTransactions }) =>{
         }
     }
 
+    const handleRowClick = (transaction) => {
+        setSelectedTransaction(transaction);
+    };
+    
+      const handleCloseDialog = () => {
+        setSelectedTransaction(null);
+    };
+
+      const handleSaveTransaction = async (updatedTransaction) => {
+        try {
+          const response = await axios.post('http://localhost/FSW-SE-Factory/APIs/updateTransaction.php', { ...updatedTransaction, TransactionId: updatedTransaction.id }, {
+            headers: { 'Content-Type': 'application/json' },
+          });
+          if (response.data.status === 'Update Success') {
+            // Update the transaction in the state
+            setTransactions((prevTransactions) =>
+              prevTransactions.map((transaction) =>
+                transaction.id === updatedTransaction.id ? updatedTransaction : transaction
+              )
+            );
+          }
+        } catch (error) {
+          console.error('Error updating transaction', error);
+        }
+        handleCloseDialog();
+    };
+    
+
     return(
         <div className="transactions-container" id="transactions-container">
             <div className="top-div">
@@ -76,17 +106,28 @@ const TransactionsTable = ({ transactions, setTransactions }) =>{
 
                     <tbody className="table-body" id="table-body">
                         {transactions.map((transaction) => (
-                            <tr key={transaction.id}>
+                            <tr key={transaction.id} onClick={() => handleRowClick(transaction)} style={{ cursor: 'pointer' }}>
                                 <td>{transaction.date}</td>
                                 <td>{transaction.category}</td>
                                 <td>{transaction.type}</td>
                                 <td>{transaction.amount}</td>
                                 <td>{transaction.notes}</td>
-                                <td><button className="bg-red-light delete-transaction" onClick={()=> deleteTransaction(transaction.id)}>Delete</button></td>
+                                <td><button className="bg-red-light delete-transaction" onClick={(e)=> {
+                                    e.stopPropagation();
+                                    deleteTransaction(transaction.id)}
+                                }>Delete</button></td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
+
+                {selectedTransaction && (
+                    <TransactionDialog
+                    transaction={selectedTransaction}
+                    onClose={handleCloseDialog}
+                    onSave={handleSaveTransaction}
+                    />
+                )}
             </div>
         </div>
     );
