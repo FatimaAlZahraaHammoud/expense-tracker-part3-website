@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Add_transactions from "../components/Add-transactions";
 import Expenses_categories_container from "../components/Expenses-categories-container";
 import FilterTransactions from "../components/Filter-transactions";
@@ -15,9 +15,17 @@ import axios from "axios";
 const Transactions = () => {
 
   const [transactions, setTransactions] = useState([]);
+  const [filteredTransactions, setFilteredTransactions] = useState([]);
+
+  useEffect(() => {
+    setFilteredTransactions(transactions);
+  }, [transactions]);
 
   const addTransactionToState = (newTransaction) => {
-    setTransactions((prevTransactions) => [...prevTransactions, newTransaction]);
+    setTransactions((prevTransactions) => {
+      const updatedTransactions = [...prevTransactions, newTransaction];
+      return updatedTransactions;
+    });
   };
 
   return (
@@ -28,8 +36,8 @@ const Transactions = () => {
       </div>
 
       <div className="table-and-filter">
-        <FilterTransactions />
-        <TransactionsTable transactions={transactions} setTransactions={setTransactions}/>
+        <FilterTransactions transactions={transactions} setFilteredTransactions={setFilteredTransactions}/>
+        <TransactionsTable transactions={filteredTransactions} setTransactions={setTransactions}/>
       </div>
     </div>
   );
