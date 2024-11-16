@@ -7,10 +7,10 @@ import "../styles/register-login.css";
 import { useNavigate} from "react-router-dom";
 import axios from "axios";
 
-const Card =  ({ amountId, amountClassName, label, amount }) => {
+const Card =  ({ amountId, amountClassName, label, amount, bgClassName }) => {
     return (
         
-        <div className="card">
+        <div className={`card ${bgClassName}`}>
             <div className="amount">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -37,11 +37,16 @@ const Card =  ({ amountId, amountClassName, label, amount }) => {
 };
 
 const Budget_Container = ({income, expense, budget}) => {
+
+    const incomeBgClass = income >= expense ? "bg-green-light" : "bg-red-light";
+    const expenseBgClass = expense > income ? "bg-red-light" : "bg-green-light";
+    const budgetBgClass = income >= budget ? "bg-green-light" : "bg-red-light";
+
     return (
         <div className="budget-container">
-            <Card amountId="income-money" amountClassName="income-money" label="Total income" amount={income}/>
-            <Card amountId="expense-money" amountClassName="expense-money" label="Total expense" amount={expense}/>
-            <Card amountId="budget-money" amountClassName="budget-money" label="Total budget" amount={budget}/>
+            <Card amountId="income-money" amountClassName="income-money" label="Total income" amount={income} bgClassName={incomeBgClass}/>
+            <Card amountId="expense-money" amountClassName="expense-money" label="Total expense" amount={expense} bgClassName={expenseBgClass}/>
+            <Card amountId="budget-money" amountClassName="budget-money" label="Total budget" amount={budget} bgClassName={budgetBgClass}/>
         </div>
     );
 };
